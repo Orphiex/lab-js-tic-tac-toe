@@ -53,3 +53,15 @@ tfoot tr td{
   background: #b8bdee;
   border-color: white;
 }
+
+.xMarker, .oMarker {
+border: 5px;
+}
+
+.xMarker {
+  background: blue;
+}
+
+.oMarker {
+  background: red;
+}
