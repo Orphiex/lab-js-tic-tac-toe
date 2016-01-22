@@ -5,7 +5,7 @@ $(document).ready(function(){
   var turnCounter = 0;
   var oMoves = [];
   var xMoves = [];
-  var winningCombo = [
+  var winCombo = [
   [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
   ];
 
@@ -19,6 +19,7 @@ $(document).ready(function(){
         $(this).attr('class', 'xMarker');
         xMoves.push($(this).data('num'));
         turnCounter++;
+        (turnCounter>4) ? findWinner(xMoves, 'X') : null;
         turnText.text('It is O\'s turn')
       } else {
         console.log('O\'s Turn')
@@ -26,6 +27,7 @@ $(document).ready(function(){
         $(this).attr('class', 'oMarker');
         oMoves.push($(this).data('num'));
         turnCounter++;
+        (turnCounter>5) ? findWinner(oMoves, 'O') : null;
         turnText.text('It is X\'s turn')
       }
       findWinner();
@@ -47,14 +49,17 @@ $(document).ready(function(){
     turnText.text('It is X\'s turn');
   }
 
-  var findWinner = function(){
-    for (var i = 0; i<winningCombo.length; i++) {
-      if (xMoves.includes(winningCombo[i])){
-        alert('X wins!');
-      } else if (oMoves.includes(winningCombo[i])) {
-        alert('O wins!');
-      } else {
-        return;
+  var findWinner = function(movesArray, name){
+    for (var i = 0; i<winCombo.length; i++) {
+      var winCount = 0;
+      for (var j = 0; j<winCombo[i].length; j++) {
+        if (movesArray.indexOf(winCombo[i][j]) !== -1){
+          winCount++;
+        }
+        if (winCount===3) {
+          alert('Game Over! '+name+' wins!');
+          resetGame();
+        }
       }
     }
   }
